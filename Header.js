@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import React from "react";
 
-const Header = ( {children, name} ) => {
+const Header = ({ children, name }) => {
     console.log(name);
 
     return (
