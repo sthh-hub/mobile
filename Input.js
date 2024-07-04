@@ -21,7 +21,7 @@ export default function Input() {
                 autoFocus={true}
             >
             </ TextInput>
-            {thankYouVisible && <Text >Thank you {text}!</Text>}
+            {thankYouVisible && <Text >Thank you!</Text>}
             <Text>Your last input: {text}</Text>
         </View>
     );
