@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { TextInput } from 'react-native';
+import { View, Text, TextInput } from 'react-native';
 
 export default function Input() {
     const [text, setText] = useState('');
     return (
+        <View>
         <TextInput 
             value={text}
             onChangeText={function (changedText) 
@@ -14,6 +15,9 @@ export default function Input() {
             }}
             placeholder="Enter your name" 
             autoCapitalize={true}
-        />
+        >
+        </ TextInput>
+        <Text>{text}</Text>
+        </View>
     );
 }

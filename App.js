@@ -11,11 +11,12 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>Open up App.js to start working on your app!</Text>
-      <Header name = {appName} theme="dark">
-        <Text> This is a child component</Text>
-        <Text> This is another child component</Text>
+      <Header name={appName} theme="dark">
+        {/* <Text> This is a child component</Text>
+        <Text> This is another child component</Text> */}
       </Header>
       <Input />
+      <StatusBar style="auto" />
     </View>
   );
 }
