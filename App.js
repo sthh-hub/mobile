@@ -25,6 +25,7 @@ export default function App() {
         placeholder="Enter your name" 
         autoCapitalize={true}
         />
+        <Text>{text}</Text>
       <StatusBar style="auto" />
     </View>
   );
