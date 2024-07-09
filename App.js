@@ -25,11 +25,13 @@ export default function App() {
         {/* <Text> This is a child component</Text>
         <Text> This is another child component</Text> */}
       </Header>
-      <Button title="Add a goal" onPress={() => {setModalVisible(true)}}></Button>
+      <View style={styles.buttonStyle}>
+        <Button title="Add a goal" onPress={() => {setModalVisible(true)}}></Button>
+      </View>
       {/* set up a callback function */}
       <Input inputHandler={handleInputData} isModalVisible={modalVisible}/> 
       {/* use the state variable to render the received data */}
-      <Text>{receivedText}</Text>
+      <Text style={styles.textStyle}>{receivedText}</Text>
       <StatusBar style="auto" />
     </View>
   );
@@ -42,4 +44,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  textStyle:{
+    fontSize: 12,
+    color: 'purple'
+  },
+  buttonStyle: {
+    fontSize: 20,
+    backgroundColor: 'lightblue',
+    color: 'white',
+    borderRadius: 5,
+    margin: 5,
+    padding: 10
+  } 
 });

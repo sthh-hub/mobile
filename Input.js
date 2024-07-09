@@ -13,6 +13,7 @@ export default function Input({ inputHandler, isModalVisible }) {
         console.log("user typed: ", text);
         inputHandler(text); // pass data to parent
         setThankYouVisible(true);
+        // setText('');
     };
 
     function changedText(changedText) {
@@ -30,13 +31,15 @@ export default function Input({ inputHandler, isModalVisible }) {
                     // onChangeText={(changedText)=>changedText(changedText)} // we need to have a variable to store the changed text
                     onChangeText={changedText} // same as above
                     onBlur={() => setThankYouVisible(true)}
-                    placeholder="Enter your name"
+                    placeholder="Enter your goal here..."
                     autoCapitalize={true}
                     autoFocus={true}
                 >
                 </ TextInput>
                 {thankYouVisible && <Text >Thank you!</Text>}
-                <Button title="Confirm" onPress={() => { handleConfirm(); }}></Button>
+                <View style={styles.buttonStyle}>
+                    <Button title="Confirm" onPress={() => { handleConfirm(); }}></Button>
+                </View>
             </View>
         </Modal>
     );
@@ -49,4 +52,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    buttonStyle: {
+        fontSize: 20,
+        backgroundColor: 'lightblue',
+        color: 'white',
+        borderRadius: 5,
+        margin: 5,
+        padding: 10
+    } 
 });
