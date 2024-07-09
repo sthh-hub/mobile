@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button } from 'react-native';
 
-export default function Input() {
+// two ways to pass props!
+// export default function Input( props ) {
+//     console.log(props.inputHandler);
+export default function Input( {inputHandler} ) {
+    console.log(inputHandler);
     const [text, setText] = useState('');
     const [thankYouVisible, setThankYouVisible] = useState(false);
 
     function handleConfirm() {
         console.log("user typed: ", text);
-        setText('');
+        inputHandler(text); // pass data to parent
+        setThankYouVisible(false);
     };
 
     function changedText(changedText) {
@@ -21,7 +26,8 @@ export default function Input() {
         <View>
             <TextInput
                 value={text}
-                onChangeText={() => changedText()}
+                // onChangeText={(changedText)=>changedText(changedText)} // we need to have a variable to store the changed text
+                onChangeText={changedText} // same as above
                 onBlur={() => setThankYouVisible(true)} 
                 placeholder="Enter your name"
                 autoCapitalize={true}
