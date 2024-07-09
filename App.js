@@ -20,18 +20,21 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <Header name={appName} theme="dark">
-        {/* <Text> This is a child component</Text>
+      <View style={styles.topContainer}>
+        <Header name={appName} theme="dark">
+          {/* <Text> This is a child component</Text>
         <Text> This is another child component</Text> */}
-      </Header>
-      <View style={styles.buttonStyle}>
-        <Button title="Add a goal" onPress={() => {setModalVisible(true)}}></Button>
+        </Header>
+        <View style={styles.buttonStyle}>
+          <Button title="Add a goal" onPress={() => { setModalVisible(true) }}></Button>
+        </View>
       </View>
-      {/* set up a callback function */}
-      <Input inputHandler={handleInputData} isModalVisible={modalVisible}/> 
-      {/* use the state variable to render the received data */}
-      <Text style={styles.textStyle}>{receivedText}</Text>
+      <View style={styles.bottomContainer}>
+        {/* set up a callback function */}
+        <Input inputHandler={handleInputData} isModalVisible={modalVisible} />
+        {/* use the state variable to render the received data */}
+        <Text style={styles.textStyle}>{receivedText}</Text>
+      </View>
       <StatusBar style="auto" />
     </View>
   );
@@ -44,16 +47,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  textStyle:{
+  textStyle: {
     fontSize: 12,
     color: 'purple'
   },
   buttonStyle: {
-    fontSize: 20,
+    width: '30%',
+    fontSize: 8,
     backgroundColor: 'lightblue',
     color: 'white',
     borderRadius: 5,
     margin: 5,
-    padding: 10
-  } 
+  },
+  topContainer: {
+    flex: 1,
+    marginTop: 70,
+    alignItems: 'center'
+  },
+  bottomContainer: {
+    flex: 5,
+    backgroundColor: 'lightyellow',
+    width: '100%',
+    alignItems: 'center'
+  }
 });

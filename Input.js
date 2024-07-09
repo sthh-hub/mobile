@@ -24,21 +24,23 @@ export default function Input({ inputHandler, isModalVisible }) {
     }
 
     return (
-        <Modal animationType="slide" visible={isModalVisible}>
-            <View style={styles.container}>
-                <TextInput
-                    value={text}
-                    // onChangeText={(changedText)=>changedText(changedText)} // we need to have a variable to store the changed text
-                    onChangeText={changedText} // same as above
-                    onBlur={() => setThankYouVisible(true)}
-                    placeholder="Enter your goal here..."
-                    autoCapitalize={true}
-                    autoFocus={true}
-                >
-                </ TextInput>
-                {thankYouVisible && <Text >Thank you!</Text>}
-                <View style={styles.buttonStyle}>
-                    <Button title="Confirm" onPress={() => { handleConfirm(); }}></Button>
+        <Modal animationType="slide" visible={isModalVisible} transparent={true}>
+            <View style={styles.modalBackground}>
+                <View style={styles.modalContainer}>
+                    <TextInput style={styles.inputStyle}
+                        value={text}
+                        // onChangeText={(changedText)=>changedText(changedText)} // we need to have a variable to store the changed text
+                        onChangeText={changedText} // same as above
+                        onBlur={() => setThankYouVisible(true)}
+                        placeholder="Enter your goal here..."
+                        autoCapitalize={true}
+                        autoFocus={true}
+                    >
+                    </ TextInput>
+                    {thankYouVisible && <Text >Thank you!</Text>}
+                    <View style={styles.buttonStyle}>
+                        <Button title="Confirm" onPress={() => { handleConfirm(); }}></Button>
+                    </View>
                 </View>
             </View>
         </Modal>
@@ -46,18 +48,28 @@ export default function Input({ inputHandler, isModalVisible }) {
 }
 
 const styles = StyleSheet.create({
-    container: {
+    modalBackground: {
         flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0)',
         justifyContent: 'center',
+        alignItems: 'center',
+    },
+    modalContainer: {
+        backgroundColor: 'lightgrey',
+        borderRadius: 5,
+        padding: 20,
+        alignItems: 'center',
     },
     buttonStyle: {
-        fontSize: 20,
-        backgroundColor: 'lightblue',
+        width: '30%',
+         backgroundColor: 'lightblue',
         color: 'white',
         borderRadius: 5,
         margin: 5,
-        padding: 10
-    } 
+    },
+    inputStyle: {
+        color: 'black',
+        backgroundColor: '#ffff99',
+        margin: 5,
+    }
 });
