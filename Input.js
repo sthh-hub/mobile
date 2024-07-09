@@ -12,7 +12,8 @@ export default function Input( {inputHandler} ) {
     function handleConfirm() {
         console.log("user typed: ", text);
         inputHandler(text); // pass data to parent
-        setThankYouVisible(false);
+        setThankYouVisible(true);
+        setText('');
     };
 
     function changedText(changedText) {
@@ -34,7 +35,7 @@ export default function Input( {inputHandler} ) {
                 autoFocus={true}
             >
             </ TextInput>
-            {thankYouVisible && <Text >Thank you! {text}</Text>}
+            {thankYouVisible && <Text >Thank you!</Text>}
             <Button title="Confirm" onPress={()=>{handleConfirm();}}></Button>
         </View>
     );
