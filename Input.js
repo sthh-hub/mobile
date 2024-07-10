@@ -35,15 +35,13 @@ export default function Input({ inputHandler, inputCanceler, isModalVisible }) {
         <Modal animationType="slide" visible={isModalVisible} transparent={true}>
             <View style={styles.modalBackground}>
                 <View style={styles.modalContainer}>
-                    <Image
-                        style={styles.imageStyle}
+                    <Image style={styles.imageStyle}
                         source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png' }}
-                        alt="Network image"
+                        alt="networkImage"
                     />
-                    <Image
-                        style={styles.imageStyle}
-                        source={require('./assets/target.png')} // Make sure the image is saved in the correct path
-                        alt="Local file"
+                    <Image style={styles.imageStyle}
+                        source={require('./assets/target.png')}
+                        alt="localFile"
                     />
                     <TextInput style={styles.inputStyle}
                         value={text}
