@@ -12,10 +12,15 @@ export default function App() {
 
   // To receive data add a parameter
   function handleInputData(data) {
-    console.log("callback fn called from child component with data: ", data);
+    console.log("callback fn called with data: ", data);
     setReceivedText(data);
     setModalVisible(false);
-  }
+  };
+  
+  function handleInputCancel(isVisible) {
+    console.log("callback fn called with data: ", isVisible);
+    setModalVisible(isVisible);
+  };
 
 
   return (
@@ -31,7 +36,7 @@ export default function App() {
       </View>
       <View style={styles.bottomContainer}>
         {/* set up a callback function */}
-        <Input inputHandler={handleInputData} isModalVisible={modalVisible} />
+        <Input inputHandler={handleInputData} inputCanceler={handleInputCancel} isModalVisible={modalVisible} />
         {/* use the state variable to render the received data */}
         <Text style={styles.textStyle}>{receivedText}</Text>
       </View>
