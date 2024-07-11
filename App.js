@@ -3,20 +3,30 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 import React, { useState } from 'react';
 import Header from "./Header";
 import Input from "./Input";
+import { ScrollView } from 'react-native-web';
 
 export default function App() {
   const appName = "Summer 2024 class";
 
   const [receivedText, setReceivedText] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+  const [goals, setGoals] = useState([]);
 
   // To receive data add a parameter
   function handleInputData(data) {
     console.log("callback fn called with data: ", data);
     setReceivedText(data);
     setModalVisible(false);
-  };
-  
+
+    // define a new object {text:.., id:..}
+    const newGoal = { text: data, id: Math.random().toString() };
+    // use updater function when updating the state variable based on existing state
+    setGoals((currentGoals) => {
+      return [...currentGoals, newGoal];
+    });
+  }
+
+
   function handleInputCancel(isVisible) {
     console.log("callback fn called with data: ", isVisible);
     setModalVisible(isVisible);
@@ -36,10 +46,24 @@ export default function App() {
       </View>
       <View style={styles.bottomContainer}>
         {/* set up a callback function */}
-        <Input inputHandler={handleInputData} inputCanceler={handleInputCancel} isModalVisible={modalVisible} />
-        {/* use the state variable to render the received data */}
+        {goals.length === 0 ? (
+          <Text>Please Add a Goal</Text>
+        ) : (
+          <ScrollView>
+            {goals.map((goalObj) => {
+              console.log(goalObj);
+              return (
+                <View key={goalObj.id} style={styles.textContainer}>
+                  <Text style={styles.textStyle}>{goalObj.text}</Text>
+                </View>
+              );
+            })}
+          </ScrollView>
+        )}
         <View style={styles.textContainer}>
-          <Text>{receivedText}</Text>
+          <Input inputHandler={handleInputData} inputCanceler={handleInputCancel} isModalVisible={modalVisible} />
+          {/* use the state variable to render the received data */}
+          {/* <Text>{receivedText}</Text> */}
         </View>
       </View>
       <StatusBar style="auto" />
@@ -58,9 +82,13 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: 'purple',
     color: 'purple',
-    fontSize: 25,
     padding: 5,
     borderRadius: 5,
+  },
+  textSytle: {
+    fontSize: 25,
+    backgroundColor: '#ffff99',
+    margin: 10,
   },
   buttonStyle: {
     width: '30%',

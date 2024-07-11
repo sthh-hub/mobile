@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
         borderColor: 'purple',
         backgroundColor: '#ffff99',
         margin: 10,
-        padding: 10
+        padding: 10,
     },
     imageStyle: {
         width: 100,
