@@ -1,9 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, ScrollView } from 'react-native';
 import React, { useState } from 'react';
 import Header from "./Header";
 import Input from "./Input";
-import { ScrollView } from 'react-native-web';
 
 export default function App() {
   const appName = "Summer 2024 class";
@@ -54,7 +53,7 @@ export default function App() {
               console.log(goalObj);
               return (
                 <View key={goalObj.id} style={styles.textContainer}>
-                  <Text style={styles.textStyle}>{goalObj.text}</Text>
+                  <Text style={styles.textSytle}>{goalObj.text}</Text>
                 </View>
               );
             })}
@@ -79,15 +78,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textContainer: {
-    borderWidth: 2,
-    borderColor: 'purple',
-    color: 'purple',
+    backgroundColor: '#ffff00',
     padding: 5,
     borderRadius: 5,
   },
   textSytle: {
     fontSize: 25,
-    backgroundColor: '#ffff99',
     margin: 10,
   },
   buttonStyle: {
