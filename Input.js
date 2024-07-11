@@ -97,6 +97,8 @@ const styles = StyleSheet.create({
         padding: 5,
     },
     inputStyle: {
+        borderWidth: 2,
+        borderColor: 'purple',
         backgroundColor: '#ffff99',
         margin: 10,
         padding: 10

@@ -38,7 +38,9 @@ export default function App() {
         {/* set up a callback function */}
         <Input inputHandler={handleInputData} inputCanceler={handleInputCancel} isModalVisible={modalVisible} />
         {/* use the state variable to render the received data */}
-        <Text style={styles.textStyle}>{receivedText}</Text>
+        <View style={styles.textContainer}>
+          <Text>{receivedText}</Text>
+        </View>
       </View>
       <StatusBar style="auto" />
     </View>
@@ -52,13 +54,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  textStyle: {
-    fontSize: 12,
-    color: 'purple'
+  textContainer: {
+    borderWidth: 2,
+    borderColor: 'purple',
+    color: 'purple',
+    fontSize: 25,
+    padding: 5,
+    borderRadius: 5,
   },
   buttonStyle: {
     width: '30%',
-    fontSize: 8,
+    fontSize: 12,
     backgroundColor: 'lightblue',
     color: 'white',
     borderRadius: 5,
