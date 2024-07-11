@@ -1,8 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Button, ScrollView, FlatList } from 'react-native';
 import React, { useState } from 'react';
-import Header from "./Header";
-import Input from "./Input";
+import Header from "./Components/Header";
+import Input from "./Components/Input";
+import GoalItem from "./Components/GoalItem";
 
 export default function App() {
   const appName = "Summer 2024 class";
@@ -48,16 +49,26 @@ export default function App() {
         {goals.length === 0 ? (
           <Text>Please Add a Goal</Text>
         ) : (
-          <ScrollView>
-            {goals.map((goalObj) => {
-              console.log(goalObj);
+          <FlatList
+            renderItem={({ item }) => {
               return (
-                <View key={goalObj.id} style={styles.textContainer}>
-                  <Text style={styles.textSytle}>{goalObj.text}</Text>
-                </View>
+                <GoalItem
+                  goal={item}
+                />
               );
-            })}
-          </ScrollView>
+            }}
+            data={goals}
+          />
+          // <ScrollView>
+          //   {goals.map((goalObj) => {
+          //     console.log(goalObj);
+          //     return (
+          //       <View key={goalObj.id} style={styles.textContainer}>
+          //         <Text style={styles.textSytle}>{goalObj.text}</Text>
+          //       </View>
+          //     );
+          //   })}
+          // </ScrollView>
         )}
         <View style={styles.textContainer}>
           <Input inputHandler={handleInputData} inputCanceler={handleInputCancel} isModalVisible={modalVisible} />

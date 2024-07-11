@@ -40,7 +40,7 @@ export default function Input({ inputHandler, inputCanceler, isModalVisible }) {
                         alt="networkImage"
                     />
                     <Image style={styles.imageStyle}
-                        source={require('./assets/target.png')}
+                        source={require('../assets/target.png')}
                         alt="localFile"
                     />
                     <TextInput style={styles.inputStyle}
