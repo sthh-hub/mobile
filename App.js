@@ -25,12 +25,19 @@ export default function App() {
       return [...currentGoals, newGoal];
     });
   }
-
-
   function handleInputCancel(isVisible) {
     console.log("callback fn called with data: ", isVisible);
     setModalVisible(isVisible);
   };
+
+  function handleDeleteGoal(deletedId) {
+    console.log("delete goal with id: ", deletedId);
+    setGoals((currentGoals) => {
+      return currentGoals.filter((goal) => {
+        return goal.id !== deletedId;
+      });
+    });
+  }
 
 
   return (
@@ -51,11 +58,7 @@ export default function App() {
         ) : (
           <FlatList
             renderItem={({ item }) => {
-              return (
-                <GoalItem
-                  goal={item}
-                />
-              );
+              return <GoalItem goal={item} deleteHandler={handleDeleteGoal} />;
             }}
             data={goals}
           />
