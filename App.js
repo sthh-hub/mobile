@@ -11,16 +11,18 @@ console.log(Stack);
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Home'>
+      <Stack.Navigator initialRouteName='Home'
+        screenOptions={{
+          headerStyle: { backgroundColor: 'darkmagenta' },
+          headerTintColor: 'white',
+        }}>
         <Stack.Screen name="Home" component={Home}
           options={{
             title: 'All Goals',
-            headerStyle: { backgroundColor: 'darkmagenta' },
-            headerTintColor: 'white',
           }} />
         <Stack.Screen name="Details"
           component={GoalDetails}
-          options={({ navigation, route }) => {
+          options={({ route }) => {
             return {
               title: route.params.goalObj.text,
               headerRight: () => {

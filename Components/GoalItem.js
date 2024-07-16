@@ -1,16 +1,19 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, ScrollView, FlatList } from 'react-native';
 import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 
+const GoalItem = ({ goal, deleteHandler }) => {
 
-const GoalItem = ({ goal, deleteHandler, pressHandler }) => {
+    const navigation = useNavigation();
+
     function handleDeleteGoal() {
         deleteHandler(goal.id);
     }
 
     function goalPressed() {
-        pressHandler(goal);
+        navigation.navigate('Details', { goalObj: goal });
     }
 
     return (

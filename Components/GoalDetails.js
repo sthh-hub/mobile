@@ -14,10 +14,10 @@ const GoalDetails = ({ navigation, route }) => {
                 <Text> More Details </Text>
             )
             }
-            <Button title="More Details"
+            {/* <Button title="More Details"
                 onPress={() => {
-                    navigation.navigate('Details', { goalObj: pressedGoal })
-                }} />
+                    navigation.navigate('Details')
+                }} /> */}
         </View>
     );
 };

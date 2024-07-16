@@ -39,11 +39,11 @@ export default function Home({ navigation }) {
         });
     }
 
-    function handlePressIGoal(pressedGoal) {
-        console.log("Goal pressed ", pressedGoal);
-        navigation.navigate('Details', { goalObj: pressedGoal });
-        // navigation.navigate('Details', { pressedGoal });
-    }
+    // function handlePressIGoal(pressedGoal) {
+    //     console.log("Goal pressed ", pressedGoal);
+    //     navigation.navigate('Details', { goalObj: pressedGoal });
+    //     // navigation.navigate('Details', { pressedGoal });
+    // }
 
 
     return (
@@ -64,7 +64,7 @@ export default function Home({ navigation }) {
                 ) : (
                     <FlatList
                         renderItem={({ item }) => {
-                            return <GoalItem goal={item} deleteHandler={handleDeleteGoal} pressHandler={handlePressIGoal} />;
+                            return <GoalItem goal={item} deleteHandler={handleDeleteGoal} />;
                         }}
                         data={goals}
                     />
