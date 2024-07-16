@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 
 const GoalDetails = ({ navigation, route }) => {
@@ -12,7 +12,7 @@ const GoalDetails = ({ navigation, route }) => {
             title: 'Warning!',
         });
     };
-    useLayoutEffect(() => {
+    useEffect(() => {
         navigation.setOptions({
             headerRight: () => (
                 <Button onPress={handleWarningPress} title="Warning" />
