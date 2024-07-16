@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-const GoalDetails = () => {
+const GoalDetails = (navigation) => {
     return (
         <View>
             <Text>Goal Details</Text>

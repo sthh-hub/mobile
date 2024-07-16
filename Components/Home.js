@@ -5,7 +5,7 @@ import Header from "./Header";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
 
-export default function Home() {
+export default function Home(navigation) {
   const appName = "Summer 2024 class";
 
   const [receivedText, setReceivedText] = useState('');
@@ -39,6 +39,11 @@ export default function Home() {
     });
   }
 
+  function handlePressIGoal() {
+    console.log("Button was pressed");
+    navigation.navigate('GoalDetails');
+  }
+
 
   return (
     <View style={styles.container}>
@@ -58,7 +63,7 @@ export default function Home() {
         ) : (
           <FlatList
             renderItem={({ item }) => {
-              return <GoalItem goal={item} deleteHandler={handleDeleteGoal} />;
+              return <GoalItem goal={item} deleteHandler={handleDeleteGoal} pressHandler={handlePressIGoal} />;
             }}
             data={goals}
           />

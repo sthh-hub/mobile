@@ -4,13 +4,22 @@ import React, { useState } from 'react';
 
 
 
-const GoalItem = ({ goal, deleteHandler }) => {
+const GoalItem = ({ goal, deleteHandler, pressHandler }) => {
     function handleDeleteGoal() {
         deleteHandler(goal.id);
-    } return (
-        <View style={styles.textContainer}>
-            <Text style={styles.textSytle}>{goal.text}</Text>
-            <Button style={styles.buttonStyle} title="X" onPress={() => { handleDeleteGoal() }} />
+    }
+
+    function goalPressed() {
+        pressHandler();
+    }
+
+    return (
+        <View>
+            <View style={styles.textContainer}>
+                <Text style={styles.textSytle}>{goal.text}</Text>
+                <Button style={styles.buttonStyle} title="X" onPress={() => { handleDeleteGoal() }} />
+                <Button style={styles.buttonStyle} title="i" onPress={() => { goalPressed() }} />
+            </View>
         </View>
     )
 }
