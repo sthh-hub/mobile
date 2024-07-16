@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { View, Text, Button } from 'react-native';
 import React from 'react';
 import Home from './Components/Home';
 import GoalDetails from './Components/GoalDetails';
@@ -18,7 +18,18 @@ export default function App() {
             headerStyle: { backgroundColor: 'darkmagenta' },
             headerTintColor: 'white',
           }} />
-        <Stack.Screen name="Details" component={GoalDetails} />
+        <Stack.Screen name="Details"
+          component={GoalDetails}
+          options={({ navigation, route }) => {
+            return {
+              title: route.params.goalObj.text,
+              headerRight: () => {
+                return <Button title="Warning"
+                  onPress={() => (
+                    console.log('Warning'))} />
+              }
+            }
+          }} />
       </Stack.Navigator>
     </ NavigationContainer>
   );
