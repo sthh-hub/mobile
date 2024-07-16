@@ -12,13 +12,13 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Home'>
-        <Stack.Screen name="Details" component={GoalDetails} />
         <Stack.Screen name="Home" component={Home}
           options={{
             title: 'All Goals',
             headerStyle: { backgroundColor: 'darkmagenta' },
             headerTintColor: 'white',
           }} />
+        <Stack.Screen name="Details" component={GoalDetails} />
       </Stack.Navigator>
     </ NavigationContainer>
   );

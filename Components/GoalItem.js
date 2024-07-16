@@ -10,7 +10,7 @@ const GoalItem = ({ goal, deleteHandler, pressHandler }) => {
     }
 
     function goalPressed() {
-        pressHandler();
+        pressHandler(goal);
     }
 
     return (
