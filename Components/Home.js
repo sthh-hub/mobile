@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Header from "./Header";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
+import PressableButton from './PressableButton';
 
 export default function Home({ navigation }) {
     const appName = "Summer 2024 class";
@@ -39,11 +40,11 @@ export default function Home({ navigation }) {
         });
     }
 
-    function handlePressIGoal(pressedGoal) {
-        console.log("Goal pressed ", pressedGoal);
-        navigation.navigate('Details', { goalObj: pressedGoal });
-        // navigation.navigate('Details', { pressedGoal });
-    }
+    // function handlePressIGoal(pressedGoal) {
+    //     console.log("Goal pressed ", pressedGoal);
+    //     navigation.navigate('Details', { goalObj: pressedGoal });
+    //     // navigation.navigate('Details', { pressedGoal });
+    // }
 
 
     return (
@@ -54,7 +55,11 @@ export default function Home({ navigation }) {
         <Text> This is another child component</Text> */}
                 </Header>
                 <View style={styles.buttonStyle}>
-                    <Button title="Add a goal" onPress={() => { setModalVisible(true) }}></Button>
+                    <PressableButton 
+                        pressedFunction={() => { setModalVisible(true) }}
+                        componentStyle={styles.goalButtonStyle}>
+                        <Text>Add a goal</Text>
+                    </PressableButton>
                 </View>
             </View>
             <View style={styles.bottomContainer}>
@@ -64,7 +69,7 @@ export default function Home({ navigation }) {
                 ) : (
                     <FlatList
                         renderItem={({ item }) => {
-                            return <GoalItem goal={item} deleteHandler={handleDeleteGoal} pressHandler={handlePressIGoal} />;
+                            return <GoalItem goal={item} deleteHandler={handleDeleteGoal} />;
                         }}
                         data={goals}
                     />
@@ -98,13 +103,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     textContainer: {
-        backgroundColor: '#ffff00',
         padding: 5,
         borderRadius: 5,
     },
     textSytle: {
         fontSize: 25,
         margin: 10,
+        color: 'purple',
     },
     buttonStyle: {
         width: '30%',
@@ -124,5 +129,14 @@ const styles = StyleSheet.create({
         backgroundColor: 'lightyellow',
         width: '100%',
         alignItems: 'center'
+    },
+    buttonStyle: {
+        marginLeft: 5,
+    },
+    goalButtonStyle: {
+        backgroundColor: 'lightblue',
+        padding: 7,
+        margin: 7,
+        borderRadius: 5,
     }
 });
