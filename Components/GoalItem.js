@@ -43,10 +43,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#aaa',
         borderRadius: 5,
     },
-    pressedStyle: {
-        opacity: 0.5,
-        backgroundColor: 'pink',
-    },
+    // pressedStyle: {
+    //     opacity: 0.5,
+    //     backgroundColor: 'pink',
+    // },
     textContainer: {
         justifyContent: 'center',
         flexDirection: 'row',
