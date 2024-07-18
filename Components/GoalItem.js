@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, ScrollView, FlatList, Pressable } from 'react-native';
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import PressableButton from './PressableButton';
 
 
 const GoalItem = ({ goal, deleteHandler }) => {
@@ -25,7 +26,10 @@ const GoalItem = ({ goal, deleteHandler }) => {
                         return [styles.horizantolContainer, pressed && styles.pressedStyle];
                     }} >
                     <Text style={styles.textSytle}>{goal.text}</Text>
-                    <Button style={styles.buttonStyle} title="X" onPress={() => { handleDeleteGoal() }} />
+                    {/* <Button style={styles.buttonStyle} title="X" onPress={() => { handleDeleteGoal() }} /> */}
+                    <PressableButton pressedFunction={handleDeleteGoal}>
+                        <Text>X</Text>
+                    </PressableButton>
                 </Pressable>
             </View>
         </View>

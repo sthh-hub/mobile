@@ -98,7 +98,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     textContainer: {
-        backgroundColor: '#ffff00',
         padding: 5,
         borderRadius: 5,
     },
