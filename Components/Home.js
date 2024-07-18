@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Header from "./Header";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
+import PressableButton from './PressableButton';
 
 export default function Home({ navigation }) {
     const appName = "Summer 2024 class";
@@ -54,7 +55,11 @@ export default function Home({ navigation }) {
         <Text> This is another child component</Text> */}
                 </Header>
                 <View style={styles.buttonStyle}>
-                    <Button title="Add a goal" onPress={() => { setModalVisible(true) }}></Button>
+                    <PressableButton 
+                        pressedFunction={() => { setModalVisible(true) }}
+                        componentStyle={styles.goalButtonStyle}>
+                        <Text>Add a goal</Text>
+                    </PressableButton>
                 </View>
             </View>
             <View style={styles.bottomContainer}>
@@ -104,6 +109,7 @@ const styles = StyleSheet.create({
     textSytle: {
         fontSize: 25,
         margin: 10,
+        color: 'purple',
     },
     buttonStyle: {
         width: '30%',
@@ -127,4 +133,10 @@ const styles = StyleSheet.create({
     buttonStyle: {
         marginLeft: 5,
     },
+    goalButtonStyle: {
+        backgroundColor: 'lightblue',
+        padding: 7,
+        margin: 7,
+        borderRadius: 5,
+    }
 });
