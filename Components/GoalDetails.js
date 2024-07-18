@@ -15,7 +15,7 @@ const GoalDetails = ({ navigation, route }) => {
     useEffect(() => {
         navigation.setOptions({
             headerRight: () => (
-                <Button onPress={handleWarningPress} title="Warning" />
+                <Button onPress={handleWarningPress} title="Warning" style={styles.warningButton} />
             ),
         });
     }, [navigation]);
@@ -52,5 +52,8 @@ const styles = StyleSheet.create({
     },
     goalText: {
         fontSize: 18,
+    },
+    warningButton: {
+        color: 'grey',
     },
 });
