@@ -123,5 +123,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'lightyellow',
         width: '100%',
         alignItems: 'center'
-    }
+    },
+    buttonStyle: {
+        marginLeft: 5,
+    },
 });

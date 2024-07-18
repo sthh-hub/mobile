@@ -27,7 +27,7 @@ const GoalItem = ({ goal, deleteHandler }) => {
                     }} >
                     <Text style={styles.textSytle}>{goal.text}</Text>
                     {/* <Button style={styles.buttonStyle} title="X" onPress={() => { handleDeleteGoal() }} /> */}
-                    <PressableButton pressedFunction={handleDeleteGoal}>
+                    <PressableButton pressedFunction={handleDeleteGoal} componentStyle={styles.buttonStyle}>
                         <Text>X</Text>
                     </PressableButton>
                 </Pressable>
@@ -63,10 +63,8 @@ const styles = StyleSheet.create({
         margin: 10,
     },
     buttonStyle: {
-        fontSize: 12,
-        color: 'white',
-        borderRadius: 5,
-        margin: 5,
+        backgroundColor: 'grey',
+        marginleft: 5,
         alignContent: 'center',
         justifyContent: 'center',
     },
