@@ -10,7 +10,6 @@ export default function Input({ inputHandler, inputCanceler, isModalVisible }) {
     const [isConfirmDisabled, setIsConfirmDisabled] = useState(true);
 
     function handleConfirm() {
-        console.log("user typed: ", text);
         inputHandler(text); // pass data to parent
         setThankYouVisible(true);
         setText('');
@@ -24,9 +23,7 @@ export default function Input({ inputHandler, inputCanceler, isModalVisible }) {
     };
 
     function changedText(changedText) {
-        console.log("changedText: ", changedText);
         setText(changedText);
-        console.log("text: ", text);
         setThankYouVisible(false);
         setIsConfirmDisabled(changedText.length === 0);
     };

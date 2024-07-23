@@ -1,19 +1,34 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, ScrollView, FlatList } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from "./Header";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
 import PressableButton from './PressableButton';
-import { app } from '../Firebase/firebaseSetup';
+import { writeToDB, deleteFromDB } from '../Firebase/firestoreHelper';
+import { database } from '../Firebase/firebaseSetup';
+import { onSnapshot, collection } from 'firebase/firestore';
 
 export default function Home({ navigation }) {
-    console.log("app: ", app);
     const appName = "Summer 2024 class";
 
     const [receivedText, setReceivedText] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
     const [goals, setGoals] = useState([]);
+
+    useEffect(() => {
+        onSnapshot(collection(database, 'goals'), (querysnapShot) => {
+            let newArray = [];
+            if (!querysnapShot.empty) {
+                querysnapShot.forEach((docSnapshot) => {
+                    console.log(docSnapshot.id);
+                    newArray.push({ ...docSnapshot.data(), id: docSnapshot.id });
+                });
+            }
+            setGoals(newArray);
+        });
+    }, []);
+    
 
     // To receive data add a parameter
     function handleInputData(data) {
@@ -22,24 +37,27 @@ export default function Home({ navigation }) {
         setModalVisible(false);
 
         // define a new object {text:.., id:..}
-        const newGoal = { text: data, id: Math.random().toString() };
+        const newGoal = { text: data };
+        writeToDB(newGoal, 'goals');
         // use updater function when updating the state variable based on existing state
-        setGoals((currentGoals) => {
-            return [...currentGoals, newGoal];
-        });
+        // setGoals((currentGoals) => {
+        //     return [...currentGoals, newGoal];
+        // });
     }
+
     function handleInputCancel(isVisible) {
-        console.log("callback fn called with data: ", isVisible);
         setModalVisible(isVisible);
     };
 
     function handleDeleteGoal(deletedId) {
         console.log("delete goal with id: ", deletedId);
-        setGoals((currentGoals) => {
-            return currentGoals.filter((goal) => {
-                return goal.id !== deletedId;
-            });
-        });
+        // setGoals((currentGoals) => {
+        //     return currentGoals.filter((goal) => {
+        //         return goal.id !== deletedId;
+        //     });
+        // });
+        // call delete from DB
+        deleteFromDB(deletedId, 'goal');
     }
 
     // function handlePressIGoal(pressedGoal) {
@@ -57,7 +75,7 @@ export default function Home({ navigation }) {
         <Text> This is another child component</Text> */}
                 </Header>
                 <View style={styles.buttonStyle}>
-                    <PressableButton 
+                    <PressableButton
                         pressedFunction={() => { setModalVisible(true) }}
                         componentStyle={styles.goalButtonStyle}>
                         <Text>Add a goal</Text>
