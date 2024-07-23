@@ -27,6 +27,7 @@ export default function Home({ navigation }) {
             }
             setGoals(newArray);
         });
+        return () => unsubscribe();
     }, []);
     
 
