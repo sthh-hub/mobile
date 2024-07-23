@@ -57,7 +57,7 @@ export default function Home({ navigation }) {
         //     });
         // });
         // call delete from DB
-        deleteFromDB(deletedId, 'goal');
+        deleteFromDB(deletedId, 'goals');
     }
 
     // function handlePressIGoal(pressedGoal) {
