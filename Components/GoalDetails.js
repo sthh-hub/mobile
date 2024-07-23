@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
+import { markAsWarning } from '../Firebase/firestoreHelper';
 
 const GoalDetails = ({ navigation, route }) => {
     console.log(route.params);
@@ -7,15 +8,19 @@ const GoalDetails = ({ navigation, route }) => {
     const [textColor, setTextColor] = useState('black');
 
     const handleWarningPress = () => {
-        setTextColor('red');
-        navigation.setOptions({
-            title: 'Warning!',
-        });
+        markAsWarning(goalObj.id, 'goals')
+        // setTextColor('red');
+        // navigation.setOptions({
+        //     title: 'Warning!',
+        // });
     };
     useEffect(() => {
         navigation.setOptions({
             headerRight: () => (
-                <Button onPress={handleWarningPress} title="Warning" style={styles.warningButton} />
+                <Button
+                    onPress={handleWarningPress}
+                    title="Warning"
+                    style={styles.warningButton} />
             ),
         });
     }, [navigation]);
