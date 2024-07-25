@@ -13,10 +13,6 @@ const GoalDetails = ({ navigation, route }) => {
 
   const handleWarningPress = () => {
     markAsWarning(goalObj.id, "goals");
-    // setTextColor('red');
-    // navigation.setOptions({
-    //     title: 'Warning!',
-    // });
   };
   useEffect(() => {
     navigation.setOptions({
@@ -43,10 +39,6 @@ const GoalDetails = ({ navigation, route }) => {
       ) : (
         <Text> More Details </Text>
       )}
-      {/* <Button title="More Details"
-                onPress={() => {
-                    navigation.navigate('Details')
-                }} /> */}
     </View>
   );
 };

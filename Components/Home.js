@@ -56,13 +56,6 @@ export default function Home({ navigation }) {
         deleteFromDB(deletedId, 'goals');
     }
 
-    // function handlePressIGoal(pressedGoal) {
-    //     console.log("Goal pressed ", pressedGoal);
-    //     navigation.navigate('Details', { goalObj: pressedGoal });
-    //     // navigation.navigate('Details', { pressedGoal });
-    // }
-
-
     return (
         <View style={styles.container}>
             <View style={styles.topContainer}>

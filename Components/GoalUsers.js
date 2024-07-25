@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text } from "react-native";
 import { FlatList } from "react-native";
+import { writeToDB } from "../Firebase/firestoreHelper";
 
 const GoalUsers = () => {
   const [users, setUsers] = useState([]);
@@ -15,9 +16,10 @@ const GoalUsers = () => {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
-        const users = data.map((user) => user.name);
+        const users = data.forEach((userData) => {
+          writeToDB(userData, 'goals/${id}/users');
+        });
         setUsers(users);
-
       } catch (error) {
         console.error(error);
       }
@@ -30,9 +32,7 @@ const GoalUsers = () => {
       <FlatList
         data={users}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
-          <Text>{item}</Text>
-        )}
+        renderItem={({ item }) => <Text>{item}</Text>}
       />
     </View>
   );
