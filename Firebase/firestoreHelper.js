@@ -38,7 +38,10 @@ export async function markAsWarning(docId, collectionName) {
 export async function readAllDocs(collectionName) {
   try {
     const querySnapShot = await getDocs(collection(database, collectionName));
-    console.log("arr from doc: ", querySnapShot);
+    let newArray = [];
+    querySnapShot.forEach((doc) => {
+      newArray.push(doc.data());
+    });
   } catch (e) {
     console.error("Error reading documents: ", e);
   }
