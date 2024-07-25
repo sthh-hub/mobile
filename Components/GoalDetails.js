@@ -7,6 +7,10 @@ const GoalDetails = ({ navigation, route }) => {
   const { goalObj } = route.params || {};
   const [textColor, setTextColor] = useState("black");
 
+    const handleMoveToGoalUser = () => {
+        navigation.navigate('GoalUsers');
+    }
+
   const handleWarningPress = () => {
     markAsWarning(goalObj.id, "goals");
     // setTextColor('red');
@@ -34,7 +38,7 @@ const GoalDetails = ({ navigation, route }) => {
             You are seeing the details of the goal with text :
             {route.params.goalObj.text} and id: {route.params.goalObj.id}
           </Text>
-          <Button title="Goal User" />
+          <Button title="Goal User" onPress={handleMoveToGoalUser}/>
         </View>
       ) : (
         <Text> More Details </Text>
