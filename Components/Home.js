@@ -53,12 +53,6 @@ export default function Home({ navigation }) {
 
     function handleDeleteGoal(deletedId) {
         console.log("delete goal with id: ", deletedId);
-        // setGoals((currentGoals) => {
-        //     return currentGoals.filter((goal) => {
-        //         return goal.id !== deletedId;
-        //     });
-        // });
-        // call delete from DB
         deleteFromDB(deletedId, 'goals');
     }
 

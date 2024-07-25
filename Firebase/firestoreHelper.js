@@ -3,8 +3,8 @@ import { database } from './firebaseSetup';
 
 export async function writeToDB(data, collectionName) {
     try {
-        const docId = await addDoc(collection(database, collectionName), data);
-        console.log(docId);
+        await addDoc(collection(database, collectionName), data);
+        console.log("Document written with ID: ", data.id);
     } catch (e) {
         console.error("Error adding document: ", e);
     }
