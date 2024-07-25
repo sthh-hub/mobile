@@ -2,7 +2,6 @@ import { View, Text, Button } from 'react-native';
 import React from 'react';
 import Home from './Components/Home';
 import GoalDetails from './Components/GoalDetails';
-import GoalUsers from './Components/GoalUsers';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -32,7 +31,6 @@ export default function App() {
               }
             }
           }} />
-        <Stack.Screen name="GoalUsers" component={GoalUsers} />
       </Stack.Navigator>
     </ NavigationContainer>
   );

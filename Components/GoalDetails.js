@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
 import { markAsWarning } from "../Firebase/firestoreHelper";
+import GoalUsers from "./GoalUsers";
 
 const GoalDetails = ({ navigation, route }) => {
   console.log(route.params);
   const { goalObj } = route.params || {};
   const [textColor, setTextColor] = useState("black");
 
-    const handleMoveToGoalUser = () => {
-        navigation.navigate('GoalUsers');
-    }
+    // const handleMoveToGoalUser = () => {
+    //     navigation.navigate('GoalUsers');
+    // }
 
   const handleWarningPress = () => {
     markAsWarning(goalObj.id, "goals");
@@ -34,7 +35,7 @@ const GoalDetails = ({ navigation, route }) => {
             You are seeing the details of the goal with text :
             {route.params.goalObj.text} and id: {route.params.goalObj.id}
           </Text>
-          <Button title="Goal User" onPress={handleMoveToGoalUser}/>
+          <GoalUsers id={route.params.goalObj.id}/>
         </View>
       ) : (
         <Text> More Details </Text>

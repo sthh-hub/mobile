@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { FlatList } from "react-native";
-import { writeToDB } from "../Firebase/firestoreHelper";
+import { writeToDB, readAllDocs } from "../Firebase/firestoreHelper";
 
-const GoalUsers = () => {
+const GoalUsers = ({ id }) => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -16,8 +16,9 @@ const GoalUsers = () => {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
-        const users = data.forEach((userData) => {
-          writeToDB(userData, 'goals/${id}/users');
+        data.forEach((userData) => {
+          userData.name;
+          writeToDB(userData, `goals/${id}/users`);
         });
         setUsers(users);
       } catch (error) {
@@ -25,6 +26,22 @@ const GoalUsers = () => {
       }
     }
     fetchUserData();
+  }, []);
+
+  useEffect(() => {
+    async function fetchAllData() {
+      try {
+        const dataFromFirestore = await readAllDocs(`goals/${id}/users`);
+        if (!dataFromFirestore.length) {
+          fetchUserData();
+        } else {
+          setUsers(dataFromFirestore);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchAllData();
   }, []);
 
   return (
