@@ -8,6 +8,7 @@ import PressableButton from './PressableButton';
 import { writeToDB, deleteFromDB } from '../Firebase/firestoreHelper';
 import { database } from '../Firebase/firebaseSetup';
 import { onSnapshot, collection } from 'firebase/firestore';
+import { Unsubscribe } from 'firebase/app-check';
 
 export default function Home({ navigation }) {
     const appName = "Summer 2024 class";
@@ -17,7 +18,7 @@ export default function Home({ navigation }) {
     const [goals, setGoals] = useState([]);
 
     useEffect(() => {
-        onSnapshot(collection(database, 'goals'), (querysnapShot) => {
+        const unsubscribe = onSnapshot(collection(database, 'goals'), (querysnapShot) => {
             let newArray = [];
             if (!querysnapShot.empty) {
                 querysnapShot.forEach((docSnapshot) => {
@@ -27,6 +28,7 @@ export default function Home({ navigation }) {
             }
             setGoals(newArray);
         });
+        return () => unsubscribe();
     }, []);
     
 
@@ -51,21 +53,8 @@ export default function Home({ navigation }) {
 
     function handleDeleteGoal(deletedId) {
         console.log("delete goal with id: ", deletedId);
-        // setGoals((currentGoals) => {
-        //     return currentGoals.filter((goal) => {
-        //         return goal.id !== deletedId;
-        //     });
-        // });
-        // call delete from DB
         deleteFromDB(deletedId, 'goals');
     }
-
-    // function handlePressIGoal(pressedGoal) {
-    //     console.log("Goal pressed ", pressedGoal);
-    //     navigation.navigate('Details', { goalObj: pressedGoal });
-    //     // navigation.navigate('Details', { pressedGoal });
-    // }
-
 
     return (
         <View style={styles.container}>
