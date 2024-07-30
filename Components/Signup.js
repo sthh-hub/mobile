@@ -1,13 +1,21 @@
 import React, { useState } from "react";
-import { View, Text, Button, TextInput, StyleSheet } from "react-native";
-import createUserWithEmailAndPassword from "firebase/auth";
+import { View, Text, Button, TextInput, StyleSheet, Alert } from "react-native";
+import { auth, createUser } from "../Firebase/firebaseSetup";
 
 export default function Signup({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const signupHandler = () => {
-    console.log("Signup");
+    if (!email.length) {
+        Alert.alert("Email should not be empty");
+        return;
+    }
+    if (password !== confirmPassword) {
+        Alert.alert("Passwords do not match");
+        return;
+    }
+    createUser(auth, email, password);
   };
   const loginHandler = () => {
     navigation.replace("Login");
@@ -20,7 +28,7 @@ export default function Signup({ navigation }) {
         <TextInput
           style={styles.inputStyle}
           value={email}
-          onChangeText={setPassword}
+          onChangeText={setEmail}
           placeholder="Email"
         />
         <Text>password</Text>
@@ -28,7 +36,7 @@ export default function Signup({ navigation }) {
           style={styles.inputStyle}
           value={password}
           secureTextEntry={true}
-          onChangeText={setEmail}
+          onChangeText={setPassword}
           placeholder="Password"
         />
         <Text>confirmed password</Text>

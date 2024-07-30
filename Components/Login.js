@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import { View, Text, Button, TextInput, StyleSheet } from "react-native";
+import { auth, loginUser } from "../Firebase/firebaseSetup";
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const signupHandler = () => {
-    console.log("Login");
-  };
   const loginHandler = () => {
+    if (!email.length) {
+      Alert.alert("Email should not be empty");
+      return;
+    }
+    loginUser(auth, email, password);
+    navigation.replace("Home");
+  };
+  const signupHandler = () => {
     navigation.replace("Signup");
   };
 
@@ -18,7 +24,7 @@ export default function Login({ navigation }) {
         <TextInput
           style={styles.inputStyle}
           value={email}
-          onChangeText={setPassword}
+          onChangeText={setEmail}
           placeholder="Email"
         />
         <Text>password</Text>
@@ -26,13 +32,13 @@ export default function Login({ navigation }) {
           style={styles.inputStyle}
           value={password}
           secureTextEntry={true}
-          onChangeText={setEmail}
+          onChangeText={setPassword}
           placeholder="Password"
         />
       </View>
       <View>
-        <Button title="Log in" onPress={signupHandler} />
-        <Button title="New user? Create an account" onPress={loginHandler} />
+        <Button title="Log in" onPress={loginHandler} />
+        <Button title="New user? Create an account" onPress={signupHandler} />
       </View>
     </View>
   );
