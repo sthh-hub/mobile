@@ -4,6 +4,7 @@ import Home from "./Components/Home";
 import GoalDetails from "./Components/GoalDetails";
 import Signup from "./Components/Signup";
 import Login from "./Components/Login";
+import Profile from "./Components/Profile";
 import PressableButton from "./Components/PressableButton";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -36,17 +37,18 @@ export default function App() {
       <Stack.Screen
         name="Home"
         component={Home}
-        options={{
+        options={({ navigation }) => ({
           title: "All Goals",
-          headerRight: () => {
-            return (
-              <Button
-                title="Profile"
-                onPress={() => {navigation.navigate("Profile");}}
-              />
-            );
-          },
-        }}
+          headerRight: () => (
+            <PressableButton
+              pressedFunction={() => {
+                navigation.navigate("Profile");
+              }}
+            >
+              <Text>Profile</Text>
+            </PressableButton>
+          ),
+        })}
       />
       <Stack.Screen
         name="Details"
@@ -65,6 +67,7 @@ export default function App() {
           };
         }}
       />
+      <Stack.Screen name="Profile" component={Profile} />
     </>
   );
 

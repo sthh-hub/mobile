@@ -11,7 +11,6 @@ export default function Login({ navigation }) {
       return;
     }
     loginUser(auth, email, password);
-    navigation.replace("Home");
   };
   const signupHandler = () => {
     navigation.replace("Signup");
