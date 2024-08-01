@@ -13,8 +13,8 @@ import Input from "./Input";
 import GoalItem from "./GoalItem";
 import PressableButton from "./PressableButton";
 import { writeToDB, deleteFromDB } from "../Firebase/firestoreHelper";
-import { database } from "../Firebase/firebaseSetup";
-import { onSnapshot, collection } from "firebase/firestore";
+import { auth, database } from "../Firebase/firebaseSetup";
+import { onSnapshot, collection, query, where } from "firebase/firestore";
 import { Unsubscribe } from "firebase/app-check";
 
 export default function Home({ navigation }) {
@@ -23,10 +23,17 @@ export default function Home({ navigation }) {
   const [receivedText, setReceivedText] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [goals, setGoals] = useState([]);
+  const collectionName = "goals";
+
+  // onSnapshot(query(collection(firestore, "goals"),
+  // where("owner", "==", auth.currentUser.uid))
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
-      collection(database, "goals"),
+      query(
+        collection(database, collectionName),
+        where("owner", "==", auth.currentUser.uid)
+      ),
       (querysnapShot) => {
         let newArray = [];
         if (!querysnapShot.empty) {
@@ -47,13 +54,12 @@ export default function Home({ navigation }) {
     setReceivedText(data);
     setModalVisible(false);
 
-    // define a new object {text:.., id:..}
-    const newGoal = { text: data };
+    const newGoal = {
+      text: data.text,
+      image: data.image,
+      owner: auth.currentUser.uid,
+    };
     writeToDB(newGoal, "goals");
-    // use updater function when updating the state variable based on existing state
-    // setGoals((currentGoals) => {
-    //     return [...currentGoals, newGoal];
-    // });
   }
 
   function handleInputCancel(isVisible) {

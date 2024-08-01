@@ -5,13 +5,14 @@ import {
   doc,
   updateDoc,
   getDocs,
+  query,
+  where,
 } from "firebase/firestore";
-import { database } from "./firebaseSetup";
+import { auth, database } from "./firebaseSetup";
 
 export async function writeToDB(data, collectionName) {
   try {
     await addDoc(collection(database, collectionName), data);
-    console.log("Document written with ID: ", data.id);
   } catch (e) {
     console.error("Error adding document: ", e);
   }
@@ -37,11 +38,19 @@ export async function markAsWarning(docId, collectionName) {
 
 export async function readAllDocs(collectionName) {
   try {
-    const querySnapShot = await getDocs(collection(database, collectionName));
+    const querySnapShot = await getDocs(
+      query(
+        collection(database, collectionName),
+        where("owner", "==", auth.currentUser.uid)
+      )
+    );
+    console.log(querySnapShot.empty);
+
     let newArray = [];
     querySnapShot.forEach((doc) => {
       newArray.push(doc.data());
     });
+    return newArray;
   } catch (e) {
     console.error("Error reading documents: ", e);
   }
