@@ -5,6 +5,7 @@ import { writeToDB, readAllDocs } from "../Firebase/firestoreHelper";
 
 const GoalUsers = ({ id }) => {
   const [users, setUsers] = useState([]);
+  console.log("id: ",id);
 
   useEffect(() => {
     fetchAllData();
@@ -28,10 +29,11 @@ const GoalUsers = ({ id }) => {
     }
   }
 
+    // error not writing to db
   async function fetchAllData() {
     try {
       const dataFromFirestore = await readAllDocs(`goals/${id}/users`);
-      console.log(dataFromFirestore);
+      console.log("dataFromFirestore: ", dataFromFirestore);
       if (!dataFromFirestore || dataFromFirestore.length === 0) {
         console.log("No data found in Firestore");
         fetchUserData();

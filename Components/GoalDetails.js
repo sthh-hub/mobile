@@ -27,6 +27,8 @@ const GoalDetails = ({ navigation, route }) => {
     });
   }, [navigation]);
 
+  console.log("id: ",route.params.goalObj.id);
+
   return (
     <View>
       {route.params ? (

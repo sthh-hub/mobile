@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Modal, StyleSheet, Image } from 'react-native';
+import ImageManager from './ImageManager';
 
 // two ways to pass props!
 // export default function Input( props ) {
@@ -32,6 +33,7 @@ export default function Input({ inputHandler, inputCanceler, isModalVisible }) {
         <Modal animationType="slide" visible={isModalVisible} transparent={true}>
             <View style={styles.modalBackground}>
                 <View style={styles.modalContainer}>
+                    <ImageManager />
                     <Image style={styles.imageStyle}
                         source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png' }}
                         alt="networkImage"

@@ -13,7 +13,6 @@ import { auth, database } from "./firebaseSetup";
 export async function writeToDB(data, collectionName) {
   try {
     await addDoc(collection(database, collectionName), data);
-    console.log("Document written with ID: ", data.id);
   } catch (e) {
     console.error("Error adding document: ", e);
   }
@@ -49,6 +48,7 @@ export async function readAllDocs(collectionName) {
     querySnapShot.forEach((doc) => {
       newArray.push(doc.data());
     });
+    return newArray;
   } catch (e) {
     console.error("Error reading documents: ", e);
   }
