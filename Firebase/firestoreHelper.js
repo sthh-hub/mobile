@@ -5,8 +5,10 @@ import {
   doc,
   updateDoc,
   getDocs,
+  query,
+  where,
 } from "firebase/firestore";
-import { database } from "./firebaseSetup";
+import { auth, database } from "./firebaseSetup";
 
 export async function writeToDB(data, collectionName) {
   try {
@@ -37,7 +39,12 @@ export async function markAsWarning(docId, collectionName) {
 
 export async function readAllDocs(collectionName) {
   try {
-    const querySnapShot = await getDocs(collection(database, collectionName));
+    const querySnapShot = await getDocs(
+      query(
+        collection(database, collectionName),
+        where("owner", "==", auth.currentUser.uid)
+      )
+    );
     let newArray = [];
     querySnapShot.forEach((doc) => {
       newArray.push(doc.data());
