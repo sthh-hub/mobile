@@ -44,6 +44,8 @@ export async function readAllDocs(collectionName) {
         where("owner", "==", auth.currentUser.uid)
       )
     );
+    console.log(querySnapShot.empty);
+
     let newArray = [];
     querySnapShot.forEach((doc) => {
       newArray.push(doc.data());
