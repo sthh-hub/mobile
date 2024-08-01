@@ -54,7 +54,11 @@ export default function Home({ navigation }) {
     setReceivedText(data);
     setModalVisible(false);
 
-    const newGoal = { text: data, owner: auth.currentUser.uid };
+    const newGoal = {
+      text: data.text,
+      image: data.image,
+      owner: auth.currentUser.uid,
+    };
     writeToDB(newGoal, "goals");
   }
 
