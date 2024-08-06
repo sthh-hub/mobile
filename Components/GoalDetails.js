@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import { View, Text, Button, StyleSheet, Image } from "react-native";
 import { markAsWarning } from "../Firebase/firestoreHelper";
 import GoalUsers from "./GoalUsers";
 import { getDownloadURL, ref } from "firebase/storage";
@@ -47,8 +47,14 @@ const GoalDetails = ({ navigation, route }) => {
           <Text style={{ ...styles.goalText, color: textColor }}>
             You are seeing the details of the goal with text :
             {route.params.goalObj.text} and id: {route.params.goalObj.id}
-            and imageUrl: {route.params.goalObj.imageUri}
           </Text>
+          <Image
+            style={styles.imageStyle}
+            source={{
+              uri: {url},
+            }}
+            alt="networkImage"
+          />
           <GoalUsers id={route.params.goalObj.id} />
         </View>
       ) : (
@@ -73,4 +79,9 @@ const styles = StyleSheet.create({
   warningButton: {
     color: "grey",
   },
+  imageStyle: {
+    width: 100,
+    height: 100,
+  },
+
 });

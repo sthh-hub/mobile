@@ -18,7 +18,8 @@ import { onSnapshot, collection, query, where } from "firebase/firestore";
 import { Unsubscribe } from "firebase/app-check";
 import { storage } from "../Firebase/firebaseSetup";
 import { ref, uploadBytesResumable } from "firebase/storage";
-  
+import LocationManager from "./LocationManager";
+
 
 export default function Home({ navigation }) {
   const appName = "Summer 2024 class";
@@ -132,6 +133,7 @@ export default function Home({ navigation }) {
           />
           {/* use the state variable to render the received data */}
           {/* <Text>{receivedText}</Text> */}
+          <LocationManager />
         </View>
       </View>
       <StatusBar style="auto" />

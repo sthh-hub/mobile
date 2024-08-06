@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, Pressable } from "react-native";
 import { FlatList } from "react-native";
 import { writeToDB, readAllDocs } from "../Firebase/firestoreHelper";
+import LocationManager from "./LocationManager";
 
 const GoalUsers = ({ id }) => {
   const [users, setUsers] = useState([]);
