@@ -11,6 +11,7 @@ import {
 import { auth, database } from "./firebaseSetup";
 
 export async function writeToDB(data, collectionName) {
+  
   try {
     await addDoc(collection(database, collectionName), data);
   } catch (e) {
@@ -41,7 +42,6 @@ export async function readAllDocs(collectionName) {
     if (!auth.currentUser) {
       throw new Error("User is not authenticated");
     }
-
     const userQuery = collection(database, collectionName);
 
     const querySnapshot = await getDocs(userQuery);
@@ -54,7 +54,6 @@ export async function readAllDocs(collectionName) {
     });
 
     return documentsArray;
-
   } catch (e) {
     console.error("Error reading documents: ", e);
     return [];

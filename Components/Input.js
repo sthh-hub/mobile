@@ -20,7 +20,7 @@ export default function Input({ inputHandler, inputCanceler, isModalVisible }) {
   const [imageUri, setImageUri] = useState("");
 
   function handleConfirm() {
-    inputHandler({text, imageUri}); // pass data to parent
+    inputHandler({ text, imageUri });
     setThankYouVisible(true);
     setText("");
     setIsConfirmDisabled(true);
@@ -38,16 +38,16 @@ export default function Input({ inputHandler, inputCanceler, isModalVisible }) {
     setIsConfirmDisabled(changedText.length === 0);
   }
 
-  function imageUriHandler() {
-    console.log("imageUriHandler called");
-    setImageUri(imageUri);
-  };
+  function imageUriHandler(uri) {
+    console.log("input ", uri);
+    setImageUri(uri);
+  }
 
   return (
     <Modal animationType="slide" visible={isModalVisible} transparent={true}>
       <View style={styles.modalBackground}>
         <View style={styles.modalContainer}>
-          <ImageManager imageUriHandler={imageUriHandler}/>
+          <ImageManager imageUriHandler={imageUriHandler} />
           <Image
             style={styles.imageStyle}
             source={{

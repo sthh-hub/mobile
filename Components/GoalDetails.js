@@ -2,15 +2,25 @@ import React, { useState, useEffect } from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
 import { markAsWarning } from "../Firebase/firestoreHelper";
 import GoalUsers from "./GoalUsers";
+import { getDownloadURL, ref } from "firebase/storage";
 
 const GoalDetails = ({ navigation, route }) => {
   console.log(route.params);
   const { goalObj } = route.params || {};
   const [textColor, setTextColor] = useState("black");
 
-    // const handleMoveToGoalUser = () => {
-    //     navigation.navigate('GoalUsers');
-    // }
+  useEffect(() => {
+    async function getImageUrl() {
+      if (route.params) {
+        const url = await getDownloadURL(ref(storage, route.params.goalObj.imageUri));
+      }
+    }
+    getImageUrl();
+  }, []);
+
+  // const handleMoveToGoalUser = () => {
+  //     navigation.navigate('GoalUsers');
+  // }
 
   const handleWarningPress = () => {
     markAsWarning(goalObj.id, "goals");
@@ -27,7 +37,7 @@ const GoalDetails = ({ navigation, route }) => {
     });
   }, [navigation]);
 
-  console.log("id: ",route.params.goalObj.id);
+  console.log("id: ", route.params.goalObj.id);
 
   return (
     <View>
@@ -37,7 +47,7 @@ const GoalDetails = ({ navigation, route }) => {
             You are seeing the details of the goal with text :
             {route.params.goalObj.text} and id: {route.params.goalObj.id}
           </Text>
-          <GoalUsers id={route.params.goalObj.id}/>
+          <GoalUsers id={route.params.goalObj.id} />
         </View>
       ) : (
         <Text> More Details </Text>

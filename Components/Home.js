@@ -35,7 +35,6 @@ export default function Home({ navigation }) {
         let newArray = [];
         if (!querysnapShot.empty) {
           querysnapShot.forEach((docSnapshot) => {
-            console.log(docSnapshot.id);
             newArray.push({ ...docSnapshot.data(), id: docSnapshot.id });
           });
         }
@@ -45,16 +44,35 @@ export default function Home({ navigation }) {
     return () => unsubscribe();
   }, []);
 
+  async function retrieveUploadImage(uri) {
+    try {
+      const response = await fetch(uri);
+      console.log("response: ", response);
+      const blob = await response.blob();
+
+      const imageName = uri.substring(uri.lastIndexOf("/") + 1);
+      const imageRef = await ref(storage, `images/${imageName}`);
+      const uploadResult = await uploadBytesResumable(imageRef, imageBlob);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   // To receive data add a parameter
   function handleInputData(data) {
-    console.log("callback fn called with data: ", data);
+    console.log("data: ", data);
+
+
+    if (data.uri) {
+      retrieveUploadImage(data.uri);
+    }
+
     setReceivedText(data);
     setModalVisible(false);
 
     const newGoal = {
       text: data.text,
-      image: data.image,
-      owner: auth.currentUser.uid,
+       owner: auth.currentUser.uid,
     };
     writeToDB(newGoal, "goals");
   }
@@ -64,7 +82,6 @@ export default function Home({ navigation }) {
   }
 
   function handleDeleteGoal(deletedId) {
-    console.log("delete goal with id: ", deletedId);
     deleteFromDB(deletedId, "goals");
   }
 
