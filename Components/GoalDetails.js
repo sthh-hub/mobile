@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import { View, Text, Button, StyleSheet, Image } from "react-native";
 import { markAsWarning } from "../Firebase/firestoreHelper";
 import GoalUsers from "./GoalUsers";
 import { getDownloadURL, ref } from "firebase/storage";
@@ -14,18 +14,19 @@ const GoalDetails = ({ navigation, route }) => {
   useEffect(() => {
     async function getImageUrl() {
       if (route.params) {
-        const url = await getDownloadURL(
+        const imageUrl = await getDownloadURL(
           ref(storage, route.params.goalObj.imageUri)
         );
+        setUrl(imageUrl);
       }
     }
     getImageUrl();
-    setUrl(url);
-  }, []);
+  }, [route.params]);
 
   const handleWarningPress = () => {
     markAsWarning(goalObj.id, "goals");
   };
+
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -49,6 +50,13 @@ const GoalDetails = ({ navigation, route }) => {
             {route.params.goalObj.text} and id: {route.params.goalObj.id}
             and imageUrl: {route.params.goalObj.imageUri}
           </Text>
+          {url && (
+            <Image
+              style={styles.imageStyle}
+              source={{ uri: url }}
+              alt="networkImage"
+            />
+          )}
           <GoalUsers id={route.params.goalObj.id} />
         </View>
       ) : (
@@ -72,5 +80,9 @@ const styles = StyleSheet.create({
   },
   warningButton: {
     color: "grey",
+  },
+  imageStyle: {
+    width: 100,
+    height: 100,
   },
 });
