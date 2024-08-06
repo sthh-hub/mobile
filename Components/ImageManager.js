@@ -7,7 +7,7 @@ const ImageManager = ({ imageUriHandler }) => {
   const [imageUri, setImageUri] = useState("");
 
   async function verifyPermission() {
-    console.log(response);
+    console.log('response: ', response);
     if (response.granted) {
       return true;
     }

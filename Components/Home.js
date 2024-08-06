@@ -16,6 +16,9 @@ import { writeToDB, deleteFromDB } from "../Firebase/firestoreHelper";
 import { auth, database } from "../Firebase/firebaseSetup";
 import { onSnapshot, collection, query, where } from "firebase/firestore";
 import { Unsubscribe } from "firebase/app-check";
+import { storage } from "../Firebase/firebaseSetup";
+import { ref, uploadBytesResumable } from "firebase/storage";
+  
 
 export default function Home({ navigation }) {
   const appName = "Summer 2024 class";
@@ -44,37 +47,33 @@ export default function Home({ navigation }) {
     return () => unsubscribe();
   }, []);
 
-  async function retrieveUploadImage(uri) {
-    try {
-      const response = await fetch(uri);
-      console.log("response: ", response);
-      const blob = await response.blob();
+  async function handleInputData(data) {
+    console.log("callback fn called with ", data);
+    let imageUri = null;
 
-      const imageName = uri.substring(uri.lastIndexOf("/") + 1);
-      const imageRef = await ref(storage, `images/${imageName}`);
-      const uploadResult = await uploadBytesResumable(imageRef, imageBlob);
-    } catch (error) {
-      console.error(error);
+    if (data.imageUri) {
+      try {
+        const response = await fetch(data.imageUri);
+        const blob = await response.blob();
+        const imageName = data.imageUri.substring(
+          data.imageUri.lastIndexOf("/") + 1
+        );
+        const imageRef = ref(storage, `images/${imageName}`);
+        const uploadResult = await uploadBytesResumable(imageRef, blob);
+        imageUri = uploadResult.metadata.fullPath;
+      } catch (error) {
+        console.error("Error uploading image: ", error);
+      }
     }
-  }
-
-  // To receive data add a parameter
-  function handleInputData(data) {
-    console.log("data: ", data);
-
-
-    if (data.uri) {
-      retrieveUploadImage(data.uri);
-    }
-
-    setReceivedText(data);
-    setModalVisible(false);
 
     const newGoal = {
       text: data.text,
-       owner: auth.currentUser.uid,
+      owner: auth.currentUser.uid,
+      imageUri: imageUri,
     };
+
     writeToDB(newGoal, "goals");
+    setModalVisible(false);
   }
 
   function handleInputCancel(isVisible) {

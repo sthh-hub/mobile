@@ -9,14 +9,14 @@ const GoalDetails = ({ navigation, route }) => {
   const { goalObj } = route.params || {};
   const [textColor, setTextColor] = useState("black");
 
-  useEffect(() => {
-    async function getImageUrl() {
-      if (route.params) {
-        const url = await getDownloadURL(ref(storage, route.params.goalObj.imageUri));
-      }
-    }
-    getImageUrl();
-  }, []);
+  // useEffect(() => {
+  //   async function getImageUrl() {
+  //     if (route.params) {
+  //       const url = await getDownloadURL(ref(storage, route.params.goalObj.imageUri));
+  //     }
+  //   }
+  //   getImageUrl();
+  // }, []);
 
   // const handleMoveToGoalUser = () => {
   //     navigation.navigate('GoalUsers');
