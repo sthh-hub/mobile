@@ -14,10 +14,10 @@ const GoalDetails = ({ navigation, route }) => {
   useEffect(() => {
     async function getImageUrl() {
       if (route.params) {
-        const imageUrl = await getDownloadURL(
+        const url = await getDownloadURL(
           ref(storage, route.params.goalObj.imageUri)
         );
-        setUrl(imageUrl);
+        setUrl(url);
       }
     }
     getImageUrl();
