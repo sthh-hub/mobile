@@ -11,17 +11,7 @@ const GoalDetails = ({ navigation, route }) => {
   const [textColor, setTextColor] = useState("black");
   const [url, setUrl] = useState("");
 
-  useEffect(() => {
-    async function getImageUrl() {
-      if (route.params) {
-        const url = await getDownloadURL(
-          ref(storage, route.params.goalObj.imageUri)
-        );
-        setUrl(url);
-      }
-    }
-    getImageUrl();
-  }, [route.params]);
+
 
   const handleWarningPress = () => {
     markAsWarning(goalObj.id, "goals");
