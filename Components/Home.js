@@ -16,6 +16,10 @@ import { writeToDB, deleteFromDB } from "../Firebase/firestoreHelper";
 import { auth, database } from "../Firebase/firebaseSetup";
 import { onSnapshot, collection, query, where } from "firebase/firestore";
 import { Unsubscribe } from "firebase/app-check";
+import { storage } from "../Firebase/firebaseSetup";
+import { ref, uploadBytesResumable } from "firebase/storage";
+import LocationManager from "./LocationManager";
+
 
 export default function Home({ navigation }) {
   const appName = "Summer 2024 class";
@@ -24,9 +28,6 @@ export default function Home({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [goals, setGoals] = useState([]);
   const collectionName = "goals";
-
-  // onSnapshot(query(collection(firestore, "goals"),
-  // where("owner", "==", auth.currentUser.uid))
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
@@ -38,7 +39,6 @@ export default function Home({ navigation }) {
         let newArray = [];
         if (!querysnapShot.empty) {
           querysnapShot.forEach((docSnapshot) => {
-            console.log(docSnapshot.id);
             newArray.push({ ...docSnapshot.data(), id: docSnapshot.id });
           });
         }
@@ -48,18 +48,33 @@ export default function Home({ navigation }) {
     return () => unsubscribe();
   }, []);
 
-  // To receive data add a parameter
-  function handleInputData(data) {
-    console.log("callback fn called with data: ", data);
-    setReceivedText(data);
-    setModalVisible(false);
+  async function handleInputData(data) {
+    console.log("callback fn called with ", data);
+    let imageUri = null;
+
+    if (data.imageUri) {
+      try {
+        const response = await fetch(data.imageUri);
+        const blob = await response.blob();
+        const imageName = data.imageUri.substring(
+          data.imageUri.lastIndexOf("/") + 1
+        );
+        const imageRef = ref(storage, `images/${imageName}`);
+        const uploadResult = await uploadBytesResumable(imageRef, blob);
+        imageUri = uploadResult.metadata.fullPath;
+      } catch (error) {
+        console.error("Error uploading image: ", error);
+      }
+    }
 
     const newGoal = {
       text: data.text,
-      image: data.image,
       owner: auth.currentUser.uid,
+      imageUri: imageUri,
     };
+
     writeToDB(newGoal, "goals");
+    setModalVisible(false);
   }
 
   function handleInputCancel(isVisible) {
@@ -67,7 +82,6 @@ export default function Home({ navigation }) {
   }
 
   function handleDeleteGoal(deletedId) {
-    console.log("delete goal with id: ", deletedId);
     deleteFromDB(deletedId, "goals");
   }
 
@@ -120,6 +134,7 @@ export default function Home({ navigation }) {
           {/* use the state variable to render the received data */}
           {/* <Text>{receivedText}</Text> */}
         </View>
+        <LocationManager />
       </View>
       <StatusBar style="auto" />
     </View>

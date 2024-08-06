@@ -1,20 +1,32 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import { View, Text, Button, StyleSheet, Image } from "react-native";
 import { markAsWarning } from "../Firebase/firestoreHelper";
 import GoalUsers from "./GoalUsers";
+import { getDownloadURL, ref } from "firebase/storage";
+import { storage } from "../Firebase/firebaseSetup";
 
 const GoalDetails = ({ navigation, route }) => {
   console.log(route.params);
   const { goalObj } = route.params || {};
   const [textColor, setTextColor] = useState("black");
+  const [url, setUrl] = useState("");
 
-    // const handleMoveToGoalUser = () => {
-    //     navigation.navigate('GoalUsers');
-    // }
+  useEffect(() => {
+    async function getImageUrl() {
+      if (route.params) {
+        const imageUrl = await getDownloadURL(
+          ref(storage, route.params.goalObj.imageUri)
+        );
+        setUrl(imageUrl);
+      }
+    }
+    getImageUrl();
+  }, [route.params]);
 
   const handleWarningPress = () => {
     markAsWarning(goalObj.id, "goals");
   };
+
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -27,7 +39,7 @@ const GoalDetails = ({ navigation, route }) => {
     });
   }, [navigation]);
 
-  console.log("id: ",route.params.goalObj.id);
+  console.log("id: ", route.params.goalObj.id);
 
   return (
     <View>
@@ -36,8 +48,16 @@ const GoalDetails = ({ navigation, route }) => {
           <Text style={{ ...styles.goalText, color: textColor }}>
             You are seeing the details of the goal with text :
             {route.params.goalObj.text} and id: {route.params.goalObj.id}
+            and imageUrl: {route.params.goalObj.imageUri}
           </Text>
-          <GoalUsers id={route.params.goalObj.id}/>
+          {url && (
+            <Image
+              style={styles.imageStyle}
+              source={{ uri: url }}
+              alt="networkImage"
+            />
+          )}
+          <GoalUsers id={route.params.goalObj.id} />
         </View>
       ) : (
         <Text> More Details </Text>
@@ -60,5 +80,9 @@ const styles = StyleSheet.create({
   },
   warningButton: {
     color: "grey",
+  },
+  imageStyle: {
+    width: 100,
+    height: 100,
   },
 });
