@@ -7,9 +7,9 @@ const GoalUsers = ({ id }) => {
   const [users, setUsers] = useState([]);
   console.log("users: ",users);
 
-  useEffect(() => {
-    fetchAllData();
-  }, [id]);
+  // useEffect(() => {
+  //   fetchAllData();
+  // }, [id]);
 
   async function fetchUserData() {
     try {
