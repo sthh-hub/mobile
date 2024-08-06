@@ -6,7 +6,7 @@ import LocationManager from "./LocationManager";
 
 const GoalUsers = ({ id }) => {
   const [users, setUsers] = useState([]);
-  console.log("users: ",users);
+  console.log("users: ", users);
 
   // useEffect(() => {
   //   fetchAllData();
@@ -30,7 +30,7 @@ const GoalUsers = ({ id }) => {
     }
   }
 
-    // error not writing to db
+  // error not writing to db
   async function fetchAllData() {
     try {
       const dataFromFirestore = await readAllDocs(`goals/${id}/users`);
@@ -49,10 +49,7 @@ const GoalUsers = ({ id }) => {
 
   return (
     <View>
-      <FlatList
-        data={users}
-        renderItem={({ item }) => <Text>{item}</Text>}
-      />
+      <FlatList data={users} renderItem={({ item }) => <Text>{item}</Text>} />
     </View>
   );
 };

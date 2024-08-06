@@ -133,8 +133,8 @@ export default function Home({ navigation }) {
           />
           {/* use the state variable to render the received data */}
           {/* <Text>{receivedText}</Text> */}
-          <LocationManager />
         </View>
+        <LocationManager />
       </View>
       <StatusBar style="auto" />
     </View>

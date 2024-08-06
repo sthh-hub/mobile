@@ -17,15 +17,16 @@ const GoalDetails = ({ navigation, route }) => {
         const url = await getDownloadURL(
           ref(storage, route.params.goalObj.imageUri)
         );
+        setUrl(url);
       }
     }
     getImageUrl();
-    setUrl(url);
-  }, []);
+  }, [route.params]);
 
   const handleWarningPress = () => {
     markAsWarning(goalObj.id, "goals");
   };
+
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -51,7 +52,7 @@ const GoalDetails = ({ navigation, route }) => {
           <Image
             style={styles.imageStyle}
             source={{
-              uri: {url},
+              uri: url,
             }}
             alt="networkImage"
           />
@@ -83,5 +84,4 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
   },
-
 });
