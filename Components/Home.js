@@ -25,9 +25,6 @@ export default function Home({ navigation }) {
   const [goals, setGoals] = useState([]);
   const collectionName = "goals";
 
-  // onSnapshot(query(collection(firestore, "goals"),
-  // where("owner", "==", auth.currentUser.uid))
-
   useEffect(() => {
     const unsubscribe = onSnapshot(
       query(

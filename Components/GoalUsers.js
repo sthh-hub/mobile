@@ -5,11 +5,11 @@ import { writeToDB, readAllDocs } from "../Firebase/firestoreHelper";
 
 const GoalUsers = ({ id }) => {
   const [users, setUsers] = useState([]);
-  console.log("id: ",id);
+  console.log("users: ",users);
 
   useEffect(() => {
     fetchAllData();
-  }, []);
+  }, [id]);
 
   async function fetchUserData() {
     try {
@@ -50,7 +50,6 @@ const GoalUsers = ({ id }) => {
     <View>
       <FlatList
         data={users}
-        keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => <Text>{item}</Text>}
       />
     </View>
