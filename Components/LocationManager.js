@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, Image, StyleSheet, Button, Alert } from "react-native";
 import * as Location from "expo-location";
-
-const mapsApiKey = "AIzaSyDN59nh5tWDcCj17nPPQ_H3oZn8bJzuBCs";
+import { mapsApiKey } from "@env";
 
 const LocationManager = () => {
   const [response, requestPermission] = Location.useForegroundPermissions();

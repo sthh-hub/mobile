@@ -49,13 +49,14 @@ const GoalDetails = ({ navigation, route }) => {
             You are seeing the details of the goal with text :
             {route.params.goalObj.text} and id: {route.params.goalObj.id}
           </Text>
-          <Image
-            style={styles.imageStyle}
-            source={{
-              uri: url,
-            }}
-            alt="networkImage"
-          />
+          {url && (
+            <Image
+              style={styles.imageStyle}
+              source={{
+                uri: url,
+              }}
+            />
+          )}
           <GoalUsers id={route.params.goalObj.id} />
         </View>
       ) : (
