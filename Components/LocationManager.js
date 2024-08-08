@@ -1,16 +1,23 @@
 import { Alert, Button, StyleSheet, Image, View } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as Location from "expo-location";
 import { mapsApiKey } from "@env";
 import { Dimensions } from "react-native";
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 const windowWidth = Dimensions.get("window").width;
-
 
 const LocationManager = () => {
   const navigation = useNavigation();
+  const route = useRoute();
   const [response, requestPermission] = Location.useForegroundPermissions();
   const [location, setLocation] = useState(null);
+
+  useEffect(() => {
+    if (route.params?.selectedLocation) {
+      setLocation(route.params.selectedLocation);
+    }
+  }, [route.params]);
+
   async function verifyPermission() {
     console.log(response);
     if (response.granted) {
@@ -20,6 +27,7 @@ const LocationManager = () => {
     const permissionResponse = await requestPermission();
     return permissionResponse.granted;
   }
+
   async function locateUserHandler() {
     try {
       //verify permission before continuing
@@ -41,8 +49,8 @@ const LocationManager = () => {
 
   return (
     <View>
-      <Button title="Static Map Button" onPress={locateUserHandler} />
-      <Button title="Interactive Map Button" onPress={()=>{navigation.navigate('Map')}} />
+      <Button title="Find my location" onPress={locateUserHandler} />
+      <Button title="Interactive Map Button" onPress={() => { navigation.navigate('Map') }} />
       {location && (
         <Image
           source={{

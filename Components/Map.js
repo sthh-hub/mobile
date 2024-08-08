@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { StyleSheet, Button } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 
-const Map = () => {
+const Map = ({ navigation }) => {
   const [selectedLocation, setSelectedLocation] = useState(null);
 
   return (
@@ -26,7 +26,13 @@ const Map = () => {
       >
         {selectedLocation && <Marker coordinate={selectedLocation} />}
       </MapView>
-      <Button title="Confirm Selected Location" />
+      <Button
+        title="Confirm Selected Location"
+        onPress={() => {
+          navigation.navigate("Profile", { selectedLocation });
+        }}
+        disabled={!selectedLocation}
+      />
     </>
   );
 };
