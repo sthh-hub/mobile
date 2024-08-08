@@ -1,52 +1,55 @@
+import { Alert, Button, StyleSheet, Image, View } from "react-native";
 import React, { useState } from "react";
-import { View, Text, Image, StyleSheet, Button, Alert } from "react-native";
 import * as Location from "expo-location";
 import { mapsApiKey } from "@env";
+import { Dimensions } from "react-native";
+import {useNavigation} from '@react-navigation/native';
+const windowWidth = Dimensions.get("window").width;
+
 
 const LocationManager = () => {
+  const navigation = useNavigation();
   const [response, requestPermission] = Location.useForegroundPermissions();
   const [location, setLocation] = useState(null);
-
   async function verifyPermission() {
-    console.log("response: ", response);
+    console.log(response);
     if (response.granted) {
       return true;
     }
-    // Request permission if not granted
+    // what if i don't have permission? let's ask for permission
     const permissionResponse = await requestPermission();
     return permissionResponse.granted;
   }
-
   async function locateUserHandler() {
-    const hasPermission = await verifyPermission();
-    if (!hasPermission) {
-      Alert.alert("You need to give permission to access location");
-      return;
-    }
     try {
+      //verify permission before continuing
+      const hasPermission = await verifyPermission();
+      if (!hasPermission) {
+        Alert.alert("You need to give permission to use location services");
+        return;
+      }
       const result = await Location.getCurrentPositionAsync();
-      console.log("result: ", result);
+
       setLocation({
         latitude: result.coords.latitude,
         longitude: result.coords.longitude,
       });
     } catch (err) {
-      console.log(err);
+      console.log("get current position ", err);
     }
   }
 
   return (
-    <View style={styles.container}>
-      <Button title="Locate Me" onPress={locateUserHandler} />
-      {location ? (
+    <View>
+      <Button title="Static Map Button" onPress={locateUserHandler} />
+      <Button title="Interactive Map Button" onPress={()=>{navigation.navigate('Map')}} />
+      {location && (
         <Image
-          style={styles.image}
           source={{
             uri: `https://maps.googleapis.com/maps/api/staticmap?center=${location.latitude},${location.longitude}&zoom=14&size=400x200&maptype=roadmap&markers=color:red%7Clabel:L%7C${location.latitude},${location.longitude}&key=${mapsApiKey}`,
           }}
+          style={styles.image}
         />
-      ) : (
-        <Text>No location yet.</Text>
       )}
     </View>
   );
@@ -55,13 +58,8 @@ const LocationManager = () => {
 export default LocationManager;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
   image: {
-    width: 400,
-    height: 400,
+    height: 200,
+    width: windowWidth,
   },
 });

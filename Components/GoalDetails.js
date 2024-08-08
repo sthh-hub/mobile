@@ -6,7 +6,6 @@ import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../Firebase/firebaseSetup";
 
 const GoalDetails = ({ navigation, route }) => {
-  console.log(route.params);
   const { goalObj } = route.params || {};
   const [textColor, setTextColor] = useState("black");
   const [url, setUrl] = useState("");
@@ -57,7 +56,7 @@ const GoalDetails = ({ navigation, route }) => {
               alt="networkImage"
             />
           )}
-          <GoalUsers id={route.params.goalObj.id} />
+          {route.params && <GoalUsers id={route.params.goalObj.id} />}
         </View>
       ) : (
         <Text> More Details </Text>

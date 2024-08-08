@@ -7,8 +7,8 @@ import LocationManager from "./LocationManager";
 const Profile = ({ navigation }) => {
   return (
     <View>
-      <Text style={styles.inputStyle}>Profile {auth.currentUser.uid}</Text>
       <Button title="Log out" onPress={() => signOut(auth)} />
+      <Text>Profile of user with id: {auth.currentUser.uid}</Text>
       <LocationManager />
     </View>
   );
