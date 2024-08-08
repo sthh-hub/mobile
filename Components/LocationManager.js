@@ -25,6 +25,7 @@ const LocationManager = () => {
     async function getUserData() {
       const userData = await getADoc("users", auth.currentUser.uid);
       if (userData) {
+        setLocation(userData.location);
       }
     }
     getUserData();
