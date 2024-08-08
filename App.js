@@ -5,6 +5,7 @@ import GoalDetails from "./Components/GoalDetails";
 import Signup from "./Components/Signup";
 import Login from "./Components/Login";
 import Profile from "./Components/Profile";
+import Map from "./Components/Map";
 import PressableButton from "./Components/PressableButton";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -68,6 +69,7 @@ export default function App() {
         }}
       />
       <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="Map" component={Map} />
     </>
   );
 
