@@ -3,7 +3,10 @@ import React, { useState, useEffect } from "react";
 import * as Location from "expo-location";
 import { mapsApiKey } from "@env";
 import { Dimensions } from "react-native";
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { WriteWithIdToDB, getADoc } from "../Firebase/firestoreHelper";
+import { auth } from "../Firebase/firebaseSetup";
+
 const windowWidth = Dimensions.get("window").width;
 
 const LocationManager = () => {
@@ -17,6 +20,15 @@ const LocationManager = () => {
       setLocation(route.params.selectedLocation);
     }
   }, [route.params]);
+
+  useEffect(() => {
+    async function getUserData() {
+      const userData = await getADoc("users", auth.currentUser.uid);
+      if (userData) {
+      }
+    }
+    getUserData();
+  }, []);
 
   async function verifyPermission() {
     console.log(response);
@@ -47,10 +59,21 @@ const LocationManager = () => {
     }
   }
 
+  function handleSaveLocation() {
+    console.log(location);
+    WriteWithIdToDB({ location }, `users`, auth.currentUser.uid);
+    navigation.navigate("Home");
+  }
+
   return (
     <View>
       <Button title="Find my location" onPress={locateUserHandler} />
-      <Button title="Interactive Map Button" onPress={() => { navigation.navigate('Map') }} />
+      <Button
+        title="Interactive Map Button"
+        onPress={() => {
+          navigation.navigate("Map");
+        }}
+      />
       {location && (
         <Image
           source={{
@@ -59,6 +82,7 @@ const LocationManager = () => {
           style={styles.image}
         />
       )}
+      <Button title="Save location" onPress={handleSaveLocation} />
     </View>
   );
 };
