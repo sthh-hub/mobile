@@ -18,6 +18,7 @@ const LocationManager = () => {
   useEffect(() => {
     if (route.params?.selectedLocation) {
       setLocation(route.params.selectedLocation);
+      console.log("selected location", route.params.selectedLocation);        
     }
   }, [route.params]);
 
@@ -32,7 +33,6 @@ const LocationManager = () => {
   }, []);
 
   async function verifyPermission() {
-    console.log(response);
     if (response.granted) {
       return true;
     }
@@ -55,6 +55,7 @@ const LocationManager = () => {
         latitude: result.coords.latitude,
         longitude: result.coords.longitude,
       });
+      console.log(result.coords.latitude, result.coords.longitude);
     } catch (err) {
       console.log("get current position ", err);
     }

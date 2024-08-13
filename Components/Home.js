@@ -6,6 +6,8 @@ import {
   Button,
   ScrollView,
   FlatList,
+  Platform,
+  Alert,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
@@ -15,11 +17,10 @@ import PressableButton from "./PressableButton";
 import { writeToDB, deleteFromDB } from "../Firebase/firestoreHelper";
 import { auth, database } from "../Firebase/firebaseSetup";
 import { onSnapshot, collection, query, where } from "firebase/firestore";
-import { Unsubscribe } from "firebase/app-check";
 import { storage } from "../Firebase/firebaseSetup";
 import { ref, uploadBytesResumable } from "firebase/storage";
-import LocationManager from "./LocationManager";
-
+import * as Notifications from "expo-notifications";
+import Constants from "expo-constants";
 
 export default function Home({ navigation }) {
   const appName = "Summer 2024 class";
@@ -28,6 +29,32 @@ export default function Home({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [goals, setGoals] = useState([]);
   const collectionName = "goals";
+
+  useEffect(() => {
+    async function getToken() {
+      try {
+        const hasPermission = await verifyPermission();
+        if (!hasPermission) {
+          Alert.alert(
+            "You need to give permission to use notification services"
+          );
+          return;
+        }
+        if (Platform.OS === "android") {
+          await Notifications.setNotificationChannelAsync("default", {
+            name: "default",
+            importance: Notifications.AndroidImportance.MAX,
+          });
+        }
+        const tokenData = await Notifications.getExpoPushTokenAsync({
+          projectId: Constants.expoConfig.extra.eas.projectId,
+        });
+      } catch (error) {
+        console.error("Error getting token: ", error);
+      }
+    }
+    getToken();
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
@@ -47,6 +74,17 @@ export default function Home({ navigation }) {
     );
     return () => unsubscribe();
   }, []);
+
+  const [response, requestPermission] = Notifications.usePermissions();
+
+  async function verifyPermission() {
+    if (response.granted) {
+      return true;
+    }
+    // Request permission if not granted
+    const permissionResponse = await requestPermission();
+    return permissionResponse.granted;
+  }
 
   async function handleInputData(data) {
     console.log("callback fn called with ", data);
@@ -174,9 +212,6 @@ const styles = StyleSheet.create({
     backgroundColor: "lightyellow",
     width: "100%",
     alignItems: "center",
-  },
-  buttonStyle: {
-    marginLeft: 5,
   },
   goalButtonStyle: {
     backgroundColor: "lightblue",
