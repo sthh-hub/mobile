@@ -28,6 +28,16 @@ export default function App() {
     return unsubscribe;
   }, []);
 
+  // Notifications
+  useEffect(() => {
+    const subscription = Notifications.addNotificationReceivedListener(
+      (notification) => {
+        console.log('notification received: ', notification);
+      }
+    );
+    return () => subscription.remove;
+  }, []);
+
   Notifications.setNotificationHandler({
     handleNotification: async (notification) => {
       return { shouldShowAlert: true };
