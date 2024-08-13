@@ -5,6 +5,15 @@ import * as Notifications from "expo-notifications";
 const NotificationManager = () => {
   const [response, requestPermission] = Notifications.usePermissions();
 
+  async function verifyPermission() {
+    if (response.granted) {
+      return true;
+    }
+    // Request permission if not granted
+    const permissionResponse = await requestPermission();
+    return permissionResponse.granted;
+  }
+
   async function scheduleNotificationHandler() {
     try {
       // Verify permission before continuing
@@ -17,6 +26,7 @@ const NotificationManager = () => {
         content: {
           title: "Goal Reminder",
           body: "Don't forget to add a goal!",
+          data: { url: "https://www.google.com" },
         },
         trigger: {
           seconds: 5,
@@ -26,15 +36,6 @@ const NotificationManager = () => {
     } catch (err) {
       console.log("Notification services error: ", err);
     }
-  }
-
-  async function verifyPermission() {
-    if (response.granted) {
-      return true;
-    }
-    // Request permission if not granted
-    const permissionResponse = await requestPermission();
-    return permissionResponse.granted;
   }
 
   return (
