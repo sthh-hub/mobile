@@ -12,13 +12,18 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.sherrytsai.myapp"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.sherrytsai.myapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -27,9 +32,15 @@
       [
         "expo-image-picker",
         {
-          "cameraPermission": "The app needs access to your camera."
+          "cameraPermission": "The app needs access to your camera.",
+          "photosPermission": "The app needs access to your camera."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "51008421-53dd-430b-b698-7c0223adfb75"
+      }
+    }
   }
 }

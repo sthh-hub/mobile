@@ -49,6 +49,7 @@ export default function Home({ navigation }) {
         const tokenData = await Notifications.getExpoPushTokenAsync({
           projectId: Constants.expoConfig.extra.eas.projectId,
         });
+        console.log("tokenData: ", tokenData);
       } catch (error) {
         console.error("Error getting token: ", error);
       }
@@ -78,7 +79,7 @@ export default function Home({ navigation }) {
   const [response, requestPermission] = Notifications.usePermissions();
 
   async function verifyPermission() {
-    if (response.granted) {
+    if (response?.granted) {
       return true;
     }
     // Request permission if not granted
