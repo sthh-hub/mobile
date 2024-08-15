@@ -12,7 +12,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { auth } from "./Firebase/firebaseSetup";
 import { onAuthStateChanged } from "firebase/auth";
 import * as Notifications from "expo-notifications";
-import * as Linking from 'expo-linking';
 
 const Stack = createNativeStackNavigator();
 
@@ -35,9 +34,8 @@ export default function App() {
       (notification) => {
         console.log(
           "notification received: ",
-          notification.request.content.data.url
+          notification.request.content
         );
-        Linking.openURL(notification.request.content.data.url);
       }
     );
     return () => subscription.remove;

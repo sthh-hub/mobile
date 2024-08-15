@@ -28,6 +28,7 @@ export default function Home({ navigation }) {
   const [receivedText, setReceivedText] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [goals, setGoals] = useState([]);
+  const [pushToken, setPushToken] = useState("");
   const collectionName = "goals";
 
   useEffect(() => {
@@ -49,6 +50,8 @@ export default function Home({ navigation }) {
         const tokenData = await Notifications.getExpoPushTokenAsync({
           projectId: Constants.expoConfig.extra.eas.projectId,
         });
+        console.log("tokenData: ", tokenData);
+        setPushToken(tokenData.data);
       } catch (error) {
         console.error("Error getting token: ", error);
       }
@@ -75,10 +78,11 @@ export default function Home({ navigation }) {
     return () => unsubscribe();
   }, []);
 
+  // Push Notifications Permissions
   const [response, requestPermission] = Notifications.usePermissions();
 
   async function verifyPermission() {
-    if (response.granted) {
+    if (response?.granted) {
       return true;
     }
     // Request permission if not granted
@@ -123,12 +127,26 @@ export default function Home({ navigation }) {
     deleteFromDB(deletedId, "goals");
   }
 
+  function pushNotificationHandler() {
+    fetch("https://exp.host/--/api/v2/push/send", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        to: pushToken,
+        title: "Push Notification",
+        body: "This is a push notification",
+      }),
+    });
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
+        <Button title="Push Notification" onPress={pushNotificationHandler} />
+
         <Header name={appName} theme="dark">
-          {/* <Text> This is a child component</Text>
-        <Text> This is another child component</Text> */}
         </Header>
         <View style={styles.buttonStyle}>
           <PressableButton
@@ -152,16 +170,6 @@ export default function Home({ navigation }) {
             }}
             data={goals}
           />
-          // <ScrollView>
-          //   {goals.map((goalObj) => {
-          //     console.log(goalObj);
-          //     return (
-          //       <View key={goalObj.id} style={styles.textContainer}>
-          //         <Text style={styles.textSytle}>{goalObj.text}</Text>
-          //       </View>
-          //     );
-          //   })}
-          // </ScrollView>
         )}
         <View style={styles.textContainer}>
           <Input
@@ -169,8 +177,6 @@ export default function Home({ navigation }) {
             inputCanceler={handleInputCancel}
             isModalVisible={modalVisible}
           />
-          {/* use the state variable to render the received data */}
-          {/* <Text>{receivedText}</Text> */}
         </View>
       </View>
       <StatusBar style="auto" />
@@ -204,11 +210,11 @@ const styles = StyleSheet.create({
   },
   topContainer: {
     flex: 1,
-    marginTop: 70,
+    marginTop: 30,
     alignItems: "center",
   },
   bottomContainer: {
-    flex: 5,
+    flex: 3,
     backgroundColor: "lightyellow",
     width: "100%",
     alignItems: "center",
